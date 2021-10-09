@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\Tenants\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\Tenants\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\Tenants\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\Tenants\NewPasswordController;
+use App\Http\Controllers\Auth\Tenants\PasswordResetLinkController;
+use App\Http\Controllers\Auth\Tenants\RegisterController;
+use App\Http\Controllers\Auth\Tenants\VerifyEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,57 +35,57 @@ Route::middleware([
         return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
     });
 
-    Route::get('/registers', [RegisteredUserController::class, 'create'])
+    Route::get('/registers', [RegisterController::class, 'showRegisterPage'])
     ->middleware('guest')
     ->name('registers');
 
 
-    Route::post('/register', [RegisteredUserController::class, 'store'])
+    Route::post('/register', [RegisterController::class, 'store'])
     ->middleware('guest');
 
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-    ->middleware('guest')
-    ->name('logins');
+    // Route::get('/login', [LoginController::class, 'create'])
+    // ->middleware('guest')
+    // ->name('logins');
 
-    Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-    ->middleware('guest');
+    // Route::post('/login', [LoginController::class, 'store'])
+    // ->middleware('guest');
 
-    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
-    ->middleware('guest')
-    ->name('password.requests');
+    // Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
+    // ->middleware('guest')
+    // ->name('password.requests');
 
-    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-    ->middleware('guest')
-    ->name('password.emails');
+    // Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
+    // ->middleware('guest')
+    // ->name('password.emails');
 
-    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
-    ->middleware('guest')
-    ->name('password.resets');
+    // Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
+    // ->middleware('guest')
+    // ->name('password.resets');
 
-    Route::post('/reset-password', [NewPasswordController::class, 'store'])
-    ->middleware('guest')
-    ->name('password.updates');
+    // Route::post('/reset-password', [NewPasswordController::class, 'store'])
+    // ->middleware('guest')
+    // ->name('password.updates');
 
-    Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
-    ->middleware('auth')
-    ->name('verification.notices');
+    // Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
+    // ->middleware('auth')
+    // ->name('verification.notices');
 
-    Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-    ->middleware(['auth', 'signed', 'throttle:6,1'])
-    ->name('verification.verifys');
+    // Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+    // ->middleware(['auth', 'signed', 'throttle:6,1'])
+    // ->name('verification.verifys');
 
-    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-    ->middleware(['auth', 'throttle:6,1'])
-    ->name('verification.sends');
+    // Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    // ->middleware(['auth', 'throttle:6,1'])
+    // ->name('verification.sends');
 
-    Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
-    ->middleware('auth')
-    ->name('password.confirms');
+    // Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
+    // ->middleware('auth')
+    // ->name('password.confirms');
 
-    Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
-    ->middleware('auth');
+    // Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
+    // ->middleware('auth');
 
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::post('/logout', [LoginController::class, 'destroy'])
     ->middleware('auth')
     ->name('logouts');
 });
