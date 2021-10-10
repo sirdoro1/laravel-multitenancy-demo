@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Auth\Tenants\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\Tenants\EmailVerificationNotificationController;
@@ -35,13 +36,7 @@ Route::middleware([
         return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
     });
 
-    Route::get('/registers', [RegisterController::class, 'showRegisterPage'])
-    ->middleware('guest')
-    ->name('registers');
-
-
-    Route::post('/register', [RegisterController::class, 'store'])
-    ->middleware('guest');
+    Auth::routes();
 
     // Route::get('/login', [LoginController::class, 'create'])
     // ->middleware('guest')
