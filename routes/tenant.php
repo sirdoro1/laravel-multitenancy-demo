@@ -31,5 +31,9 @@ Route::middleware([
     });
 
     Route::get('/login',[LoginController::class,'showLoginForm']);
-    Route::get('/register',[RegisterController::class,'showLoginForm']);
+    Route::post('/login',[LoginController::class,'login']);
+    Route::post('/register',[RegisterController::class, 'register']);
+    Route::get('/register',[RegisterController::class, 'showRegistrationForm']);
+    Route::get('/home',[HomeController::class, 'index']);
+    Route::post('/logout',[LoginController::class,'logout']);
 });
