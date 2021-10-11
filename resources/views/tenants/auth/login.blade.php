@@ -8,7 +8,7 @@
                 <div class="card-header">{{Str::upper(tenant('id'))}} - {{ __('Login Page') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ url('login') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -58,7 +58,7 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link" href="{{ url('/password/reset') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
