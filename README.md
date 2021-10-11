@@ -1,5 +1,5 @@
 # Laravel Multitenancy Demo
 This a laravel demo project implementing multi-tenant structure.
 
-#Installation
+# Installation
 Instruction coming soon
